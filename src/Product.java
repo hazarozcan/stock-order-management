@@ -11,6 +11,22 @@ public class Product {
 
     }
 
+    public void increaseStock(int amount) {
+        if (amount >= 0) {
+            this.stocklevel = this.stocklevel + amount;
+        } else {
+            System.out.println("You can not add negative value");
+            return;
+        }
+    }
+
+    public void decreaseStock(int amount) {
+        this.stocklevel = this.stocklevel - amount;
+        if (this.stocklevel < 0) {
+            this.stocklevel = this.stocklevel - amount;
+        }
+    }
+
     public void setBarcodenumber(String barcodenumber) {
 
         if (barcodenumber == null || barcodenumber.isEmpty()) {
