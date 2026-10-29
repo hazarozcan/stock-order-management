@@ -1,6 +1,6 @@
 public class Product {
 
-    public String productname;
+    private String productname;
     private String barcodenumber;
     private double costprice;
     private double saleprice;
@@ -8,12 +8,13 @@ public class Product {
     private ProductStatus productstatus;
 
     public Product(String productname, String barcodenumber, double costprice, double saleprice, int stocklevel) {
-        this.productname = productname;
-        this.barcodenumber = barcodenumber;
-        this.costprice = costprice;
-        this.saleprice = saleprice;
-        this.stocklevel = stocklevel;
-        productstatus = ProductStatus.ACTIVE;
+
+        setProductname(productname);
+        setBarcodenumber(barcodenumber);
+        setCostprice(costprice);
+        setSaleprice(saleprice);
+        setStocklevel(stocklevel);
+        this.productstatus = ProductStatus.ACTIVE;
 
     }
 
@@ -38,8 +39,7 @@ public class Product {
     public void setBarcodenumber(String barcodenumber) {
 
         if (barcodenumber == null || barcodenumber.isEmpty()) {
-            System.out.println("Lutfen geçerli bir değer giriniz!");
-            return;
+            throw new IllegalArgumentException("Please enter a valid value");
         }
         for (int i = 0; i < barcodenumber.length(); i++) {
 
@@ -54,15 +54,43 @@ public class Product {
     }
 
     public void setCostprice(double costprice) {
-        this.costprice = costprice;
+        if (costprice > 0) {
+            this.costprice = costprice;
+
+        } else {
+            throw new IllegalArgumentException();
+        }
     }
 
     public void setSaleprice(double saleprice) {
-        this.saleprice = saleprice;
+        if (saleprice > 0) {
+            this.saleprice = saleprice;
+
+        } else {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    public void setStocklevel(int stocklevel) {
+        if (stocklevel >= 0) {
+            this.stocklevel = stocklevel;
+        } else {
+            throw new IllegalArgumentException();
+        }
+
     }
 
     public void setProductstatus(ProductStatus productstatus) {
         this.productstatus = productstatus;
+    }
+
+    public void setProductname(String productname) {
+        if (productname == null || productname.isBlank()) {
+            throw new IllegalArgumentException();
+
+        } else {
+            this.productname = productname;
+        }
     }
 
     public String getBarcodenumber() {
@@ -83,6 +111,10 @@ public class Product {
 
     public ProductStatus getProductstatus() {
         return productstatus;
+    }
+
+    public String getProductname() {
+        return productname;
     }
 
 }
