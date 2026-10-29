@@ -45,12 +45,10 @@ public class Product {
 
             if (!('0' <= barcodenumber.charAt(i) && barcodenumber.charAt(i) <= '9')) {
 
-                System.out.println("Please enter only positive integers");
-                return;
+                throw new IllegalArgumentException("Please enter only positive integers");
             }
         }
         this.barcodenumber = barcodenumber;
-
     }
 
     public void setCostprice(double costprice) {
@@ -81,7 +79,14 @@ public class Product {
     }
 
     public void setProductstatus(ProductStatus productstatus) {
-        this.productstatus = productstatus;
+        if (productstatus == null) {
+            throw new IllegalArgumentException("Please enter a valid value");
+        } else if (this.productstatus == ProductStatus.DISCONTINUED) {
+            throw new IllegalArgumentException("Status updates cannot be performed on sales have ended products!");
+        } else {
+            this.productstatus = productstatus;
+        }
+
     }
 
     public void setProductname(String productname) {

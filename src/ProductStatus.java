@@ -2,5 +2,5 @@
 public enum ProductStatus {
     ACTIVE,
     INACTİVE,
-    DİSCONTINUED
+    DISCONTINUED
 }
