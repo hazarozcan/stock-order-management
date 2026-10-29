@@ -7,7 +7,13 @@ public class Product {
     private int stocklevel;
     private ProductStatus productstatus;
 
-    public Product() {
+    public Product(String productname, String barcodenumber, double costprice, double saleprice, int stocklevel) {
+        this.productname = productname;
+        this.barcodenumber = barcodenumber;
+        this.costprice = costprice;
+        this.saleprice = saleprice;
+        this.stocklevel = stocklevel;
+        productstatus = ProductStatus.ACTIVE;
 
     }
 
@@ -22,15 +28,11 @@ public class Product {
 
     public void decreaseStock(int amount) {
 
-        if (!(amount <= 0)) {
+        if (amount > 0 && this.stocklevel >= amount) {
             this.stocklevel = this.stocklevel - amount;
-        } else if (amount > this.stocklevel) {
-            this.stocklevel = 0;
-            System.out.println("The quantity was set to 0 because the recorded amount exceeded the stock quantity.");
         } else {
             System.out.println("Please enter a valid value");
         }
-
     }
 
     public void setBarcodenumber(String barcodenumber) {
