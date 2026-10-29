@@ -15,13 +15,15 @@ public class Product {
 
         for (int i = 0; i < barcodenumber.length(); i++) {
 
-            if (!(barcodenumber.charAt(i) >= 'a' || barcodenumber.charAt(i) <= 'z')) {
-                System.out.println("You cannot enter a negative number or char here");
-                return;
+            if (!('0' <= barcodenumber.charAt(i) && barcodenumber.charAt(i) <= '9')) {
                 
+                System.out.println("Please enter only positive integers");
+                return;
             }
+
         }
         this.barcodenumber = barcodenumber;
+
     }
 
     public void setCostprice(double costprice) {
