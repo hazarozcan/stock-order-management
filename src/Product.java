@@ -12,19 +12,25 @@ public class Product {
     }
 
     public void increaseStock(int amount) {
-        if (amount >= 0) {
+        if (amount > 0) {
             this.stocklevel = this.stocklevel + amount;
         } else {
-            System.out.println("You can not add negative value");
+            System.out.println("You can not add negative or 0 value");
             return;
         }
     }
 
     public void decreaseStock(int amount) {
-        this.stocklevel = this.stocklevel - amount;
-        if (this.stocklevel < 0) {
+
+        if (!(amount <= 0)) {
             this.stocklevel = this.stocklevel - amount;
+        } else if (amount > this.stocklevel) {
+            this.stocklevel = 0;
+            System.out.println("The quantity was set to 0 because the recorded amount exceeded the stock quantity.");
+        } else {
+            System.out.println("Please enter a valid value");
         }
+
     }
 
     public void setBarcodenumber(String barcodenumber) {
@@ -51,10 +57,6 @@ public class Product {
 
     public void setSaleprice(double saleprice) {
         this.saleprice = saleprice;
-    }
-
-    public void setStocklevel(int stocklevel) {
-        this.stocklevel = stocklevel;
     }
 
     public void setProductstatus(ProductStatus productstatus) {
