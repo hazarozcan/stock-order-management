@@ -13,14 +13,17 @@ public class Product {
 
     public void setBarcodenumber(String barcodenumber) {
 
+        if (barcodenumber == null || barcodenumber.isEmpty()) {
+            System.out.println("Lutfen geçerli bir değer giriniz!");
+            return;
+        }
         for (int i = 0; i < barcodenumber.length(); i++) {
 
             if (!('0' <= barcodenumber.charAt(i) && barcodenumber.charAt(i) <= '9')) {
-                
+
                 System.out.println("Please enter only positive integers");
                 return;
             }
-
         }
         this.barcodenumber = barcodenumber;
 
