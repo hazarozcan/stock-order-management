@@ -3,8 +3,15 @@ public class OrderItem {
     private final int quantity;
 
     public OrderItem(Product product, int quantity) {
-        this.product = product;
-        this.quantity = quantity;
+
+        if (product == null || quantity <= 0) {
+
+            throw new IllegalArgumentException("Enter a valid value");
+        } else {
+            this.product = product;
+            this.quantity = quantity;
+
+        }
     }
 
     public Product getProduct() {
