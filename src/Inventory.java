@@ -15,27 +15,25 @@ public class Inventory {
         } else {
             productCatalog.put(product.getBarcodenumber(), product);
         }
-
     }
 
     public Product getProductByBarcode(String barcode) {
-
         return productCatalog.get(barcode);
-
     }
 
     public Collection<Product> getAllProducts() {
-
         return new ArrayList<>(productCatalog.values());
     }
 
-    public void dicontinueProduct(String barcode) {
+    public void discontinueProduct(String barcode) {
 
-        if (getProductByBarcode(barcode) == null) {
-            throw new IllegalArgumentException(barcode);
+        Product product = getProductByBarcode(barcode);
+
+        if (product == null) {
+            throw new IllegalArgumentException("Enter e valid value");
         }
         else{
-            getProductByBarcode(barcode).setProductstatus(ProductStatus.DISCONTINUED);
+            product.setProductstatus(ProductStatus.DISCONTINUED);
         }
 
     }
