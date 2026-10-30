@@ -69,7 +69,7 @@ public class Product {
         }
     }
 
-    public void setStocklevel(int stocklevel) {
+    private void setStocklevel(int stocklevel) {
         if (stocklevel >= 0) {
             this.stocklevel = stocklevel;
         } else {
