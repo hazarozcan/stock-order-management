@@ -91,7 +91,7 @@ public class Product {
 
     public void setProductname(String productname) {
         if (productname == null || productname.isBlank()) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Please enter a valid value");
 
         } else {
             this.productname = productname;
