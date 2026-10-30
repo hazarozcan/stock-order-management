@@ -16,4 +16,10 @@ public class Inventory {
 
     }
 
+    public Product getProductByBarcode(String barcode) {
+             
+        return productCatalog.get(barcode);
+
+    }
+
 }
