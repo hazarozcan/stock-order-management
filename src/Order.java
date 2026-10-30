@@ -15,4 +15,20 @@ public class Order {
 
     }
 
+    public double calculateTotal() {
+
+        double totalprice = 0.0;
+
+        if (orderitems.isEmpty()) {
+            return 0.0;
+        }
+
+        for (OrderItem o : orderitems) {
+            double temp = (o.getProduct().getSaleprice() * o.getQuantity());
+            totalprice = (totalprice + temp);
+        }
+        return totalprice;
+        
+    }
+
 }
