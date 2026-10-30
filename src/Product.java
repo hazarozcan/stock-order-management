@@ -73,7 +73,7 @@ public class Product {
         if (stocklevel >= 0) {
             this.stocklevel = stocklevel;
         } else {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Enter a valid value");
         }
 
     }
