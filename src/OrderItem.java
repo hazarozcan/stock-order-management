@@ -1,4 +1,5 @@
 public class OrderItem {
+   
     private final Product product;
     private final int quantity;
 
