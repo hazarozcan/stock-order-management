@@ -17,19 +17,21 @@ public class Order {
         if (item.getQuantity() > item.getProduct().getStocklevel()) {
             throw new IllegalArgumentException("There are not as many items in stock as indicated !");
         }
-    
+
+
+        int totalquantity = 0;
+
         for (OrderItem orders : orderitems) {
 
-            if(item.getProduct().getBarcodenumber() == orders.getProduct().getBarcodenumber()){
-                
-                int quantity = orders.getQuantity(); 
-                int totalquantitiy =  quantity + item.getQuantity();
-               
-                if (totalquantitiy < item.getProduct().getStocklevel()) {
+            if (item.getProduct().getBarcodenumber().equals(orders.getProduct().getBarcodenumber())) {
+
+                totalquantity = (orders.getQuantity() +  item.getQuantity());
+
+                if (totalquantity > item.getProduct().getStocklevel()) {
                     throw new IllegalArgumentException("There are not as many items in stock as indicated");
                 }
             }
-        } 
+        }
         orderitems.add(item);
     }
 
