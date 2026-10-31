@@ -58,6 +58,12 @@ public class Order {
     }
 
     public void confirmOrder() {
+
+        if (orderitems.isEmpty()) {
+
+            throw new IllegalArgumentException("you can not confirm order without add any item");
+            
+        }
         
         if (status != OrderStatus.DRAFT) {
             throw new IllegalArgumentException("Item status must be Draft");
