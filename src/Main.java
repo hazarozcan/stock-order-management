@@ -17,9 +17,13 @@ public class Main {
         order.addItem(orderItem);
         order.addItem(orderItem);
         
+
+        System.out.println(order.getStatus());
         System.out.println(product1.getStocklevel());
         order.confirmOrder();
-        System.out.println(product1.getStocklevel());
+        System.out.println(order.getStatus());
+        System.out.println(product1.getStocklevel()); 
+        System.out.println(order.getStatus());
         // order.confirmOrder();
         order.addItem(orderItem4);
 
