@@ -1,4 +1,5 @@
 public enum OrderStatus {
     DRAFT,
-    CONFIRMED  
+    CONFIRMED,
+    CANCELLED
 }

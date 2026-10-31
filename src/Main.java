@@ -19,18 +19,15 @@ public class Main {
         
 
         System.out.println(order.getStatus());
+        order.cancelOrder();
         System.out.println(product1.getStocklevel());
         order.confirmOrder();
         System.out.println(order.getStatus());
         System.out.println(product1.getStocklevel()); 
-        System.out.println(order.getStatus());
-        // order.confirmOrder();
-        order.addItem(orderItem4);
-
-
-       /*  order.addItem(orderItem2);
-        order.addItem(orderItem4);
-        order.addItem(orderItem3); */
+        
+    
+    
+    
+    
     }
-
 }

@@ -59,7 +59,6 @@ public class Order {
 
     public void confirmOrder() {
 
-
         if (orderitems.isEmpty()) {
 
             throw new IllegalArgumentException("Cannot confirm an empty order");
@@ -102,10 +101,19 @@ public class Order {
         status = OrderStatus.CONFIRMED;
     }
 
-    public OrderStatus getStatus(){
+    public void cancelOrder() {
+       
+        if (status != OrderStatus.DRAFT) {
+
+            throw new IllegalArgumentException("This operation cannot be performed.");
+        }
+       
+        status = OrderStatus.CANCELLED;
+    }
+
+    public OrderStatus getStatus() {
 
         return status;
     }
 
 }
-
