@@ -5,6 +5,12 @@ import java.util.List;
 public class Order {
 
     private List<OrderItem> orderitems = new ArrayList<>();
+    
+    private OrderStatus status;
+
+    public Order(){
+    this.status = OrderStatus.DRAFT;
+    }
 
     public void addItem(OrderItem item) {
 
@@ -27,7 +33,7 @@ public class Order {
                 totalquantity = totalquantity + (orders.getQuantity());
             }
         }
-        
+
         totalquantity = totalquantity + item.getQuantity();
 
         if (totalquantity > item.getProduct().getStocklevel()) {
@@ -46,6 +52,40 @@ public class Order {
         }
 
         return totalprice;
+    }
+
+    public void confirmOrder() {
+
+        for (OrderItem item : orderitems) {
+
+            if (item.getProduct().getProductstatus() != ProductStatus.ACTIVE) {
+                throw new IllegalArgumentException("Product do not available for sale!");
+            }
+
+            int totalquantity = 0;
+
+            for (OrderItem orders : orderitems) {
+
+                if (orders.getProduct().getBarcodenumber().equals(item.getProduct().getBarcodenumber())) {
+
+                    totalquantity = totalquantity + orders.getQuantity();
+
+                }
+
+            }
+            
+            if (totalquantity > item.getProduct().getStocklevel()) {
+                throw new IllegalArgumentException("There are not enough products!");
+                
+            }
+        }
+
+        for (OrderItem item : orderitems) {
+
+            item.getProduct().decreaseStock(item.getQuantity());
+            
+        }
+
     }
 
 }
