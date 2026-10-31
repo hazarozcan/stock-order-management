@@ -58,12 +58,12 @@ public class Order {
     }
 
     public void confirmOrder() {
+        
+        if (status != OrderStatus.DRAFT) {
+            throw new IllegalArgumentException("Item status must be Draft");
+        }
 
         for (OrderItem item : orderitems) {
-
-            if (status != OrderStatus.DRAFT) {
-                throw new IllegalArgumentException("Item status must be Draft");
-            }
 
             if (item.getProduct().getProductstatus() != ProductStatus.ACTIVE) {
                 throw new IllegalArgumentException("Product do not available for sale!");
