@@ -5,15 +5,18 @@ import java.util.List;
 public class Order {
 
     private List<OrderItem> orderitems = new ArrayList<>();
-    
+
     private OrderStatus status;
 
-    public Order(){
-    this.status = OrderStatus.DRAFT;
+    public Order() {
+        this.status = OrderStatus.DRAFT;
     }
 
     public void addItem(OrderItem item) {
 
+        if (status != OrderStatus.DRAFT) {
+            throw new IllegalArgumentException("Item status not be Draft");
+        }
         if (item == null) {
             throw new IllegalArgumentException("Enter a valid value");
         }
@@ -58,6 +61,10 @@ public class Order {
 
         for (OrderItem item : orderitems) {
 
+            if (status != OrderStatus.DRAFT) {
+                throw new IllegalArgumentException("Item status must be Draft");
+            }
+
             if (item.getProduct().getProductstatus() != ProductStatus.ACTIVE) {
                 throw new IllegalArgumentException("Product do not available for sale!");
             }
@@ -73,19 +80,19 @@ public class Order {
                 }
 
             }
-            
+
             if (totalquantity > item.getProduct().getStocklevel()) {
                 throw new IllegalArgumentException("There are not enough products!");
-                
+
             }
         }
 
         for (OrderItem item : orderitems) {
 
             item.getProduct().decreaseStock(item.getQuantity());
-            
-        }
 
+        }
+        status = OrderStatus.CONFIRMED;
     }
 
 }
