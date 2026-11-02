@@ -5,6 +5,22 @@ public class OrderManager {
 
     private List<Order> orders = new ArrayList<>();
 
+    public List<Order> getOrdersByStatus(OrderStatus status) {
+
+        ArrayList<Order> filtre = new ArrayList<>();
+
+        if (status == null) {
+            throw new IllegalArgumentException("Enter a valid value!");
+        }
+
+        for (Order temporder : orders) {
+            if (temporder.getStatus() == status) {
+                filtre.add(temporder);
+            }
+        }
+         return filtre;
+    }
+
     public void addOrder(Order order) {
 
         if (order == null) {
@@ -26,7 +42,7 @@ public class OrderManager {
     }
 
     public Order getOrderById(int orderId) {
-       
+
         for (Order id : orders) {
             if (id.getOrderId() == orderId) {
                 return id;

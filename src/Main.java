@@ -9,25 +9,42 @@ public class Main {
         OrderItem orderItem = new OrderItem(product1, 1);
         OrderItem orderItem2 = new OrderItem(product1, 2);
         OrderItem orderItem3 = new OrderItem(product2, 6);
-        OrderItem orderItem4 = new OrderItem(product3, 5); 
-       
+        OrderItem orderItem4 = new OrderItem(product3, 5);
+
         Order order = new Order(100);
+        Order order2 = new Order(101);
+        Order order3 = new Order(102);
 
         order.addItem(orderItem);
         order.addItem(orderItem);
         order.addItem(orderItem);
+
+        /*
+         * System.out.println(order.getStatus());
+         * order.cancelOrder();
+         * System.out.println(product1.getStocklevel());
+         * order.confirmOrder();
+         * System.out.println(order.getStatus());
+         * System.out.println(product1.getStocklevel());
+         */
+
+        OrderManager ordermanager = new OrderManager();
+
+        ordermanager.addOrder(order);
+        ordermanager.addOrder(order3);
+        ordermanager.addOrder(order2);
+
+         Order ordertemp = ordermanager.getOrderById(100);
+
+        if (ordermanager.getOrderById(100) != null) {
+            System.out.println(ordermanager.getOrderById(100) + " başarıyla Bulundu");
+        }
+        if (ordermanager.getOrderById(99) == null) {
+            System.out.println(ordermanager.getOrderById(99) + " başarisiz!!!");
+            
+        }
+
         
 
-        System.out.println(order.getStatus());
-        order.cancelOrder();
-        System.out.println(product1.getStocklevel());
-        order.confirmOrder();
-        System.out.println(order.getStatus());
-        System.out.println(product1.getStocklevel()); 
-        
-    
-    
-    
-    
     }
 }
