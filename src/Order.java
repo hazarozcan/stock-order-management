@@ -128,10 +128,27 @@ public class Order {
         return orderId;
     }
 
-    public List<OrderItem> getItems(){
-      
+    public List<OrderItem> getItems() {
+
         return new ArrayList<>(orderitems);
     }
 
-}
+    public void removeItem(String barcode) {
+        if (status != OrderStatus.DRAFT) {
+            throw new IllegalArgumentException();
+        }
+        if (barcode == null || barcode.isEmpty()) {
+            throw new IllegalArgumentException();
 
+        }
+        for (OrderItem orderItem : orderitems) {
+            if (orderItem.getProduct().getBarcodenumber().equals(barcode)) {
+                orderitems.remove(orderItem);
+
+            }
+        }
+        throw new IllegalArgumentException();
+
+    }
+
+}
