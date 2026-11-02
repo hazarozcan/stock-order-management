@@ -11,5 +11,10 @@ public class OrderManager {
         }
         orders.add(order);
     }
+    public List<Order> getAllOrders(){
+      
+        return new ArrayList<>(orders);
+    }
+
 
 }

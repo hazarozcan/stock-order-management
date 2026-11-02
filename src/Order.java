@@ -8,8 +8,16 @@ public class Order {
 
     private OrderStatus status;
 
-    public Order() {
+    private final int orderId;
+
+    public Order(int orderId) {
+
         this.status = OrderStatus.DRAFT;
+        if (orderId <= 0) {
+            throw new IllegalArgumentException();
+        }
+        this.orderId = orderId;
+
     }
 
     public void addItem(OrderItem item) {
@@ -102,12 +110,12 @@ public class Order {
     }
 
     public void cancelOrder() {
-       
+
         if (status != OrderStatus.DRAFT) {
 
             throw new IllegalArgumentException("This operation cannot be performed.");
         }
-       
+
         status = OrderStatus.CANCELLED;
     }
 
@@ -116,4 +124,11 @@ public class Order {
         return status;
     }
 
+    public int getOrderId(){
+        return orderId;
+    }
 }
+
+///En son her sipariş için order id belirleyecektik bunun için başlangıç olarak order sınıfına orderid isimli değişken oluşturduk
+/// Şunları düşün: sipariş numarası sistem tarafından otomatik atanmalı.
+/// sipariş numarası benzersiz olmalı.
