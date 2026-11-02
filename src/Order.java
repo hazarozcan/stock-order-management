@@ -127,5 +127,11 @@ public class Order {
     public int getOrderId() {
         return orderId;
     }
+
+    public List<OrderItem> getItems(){
+      
+        return new ArrayList<>(orderitems);
+    }
+
 }
 
