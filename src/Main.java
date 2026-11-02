@@ -11,7 +11,7 @@ public class Main {
         OrderItem orderItem3 = new OrderItem(product2, 6);
         OrderItem orderItem4 = new OrderItem(product3, 5); 
        
-        Order order = new Order();
+        Order order = new Order(100);
 
         order.addItem(orderItem);
         order.addItem(orderItem);
