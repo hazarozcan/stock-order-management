@@ -12,11 +12,11 @@ public class Order {
 
     public Order(int orderId) {
 
-        this.status = OrderStatus.DRAFT;
         if (orderId <= 0) {
             throw new IllegalArgumentException();
         }
         this.orderId = orderId;
+        this.status = OrderStatus.DRAFT;
 
     }
 
@@ -124,11 +124,12 @@ public class Order {
         return status;
     }
 
-    public int getOrderId(){
+    public int getOrderId() {
         return orderId;
     }
 }
 
-///En son her sipariş için order id belirleyecektik bunun için başlangıç olarak order sınıfına orderid isimli değişken oluşturduk
+/// En son her sipariş için order id belirleyecektik bunun için başlangıç olarak
+/// order sınıfına orderid isimli değişken oluşturduk
 /// Şunları düşün: sipariş numarası sistem tarafından otomatik atanmalı.
 /// sipariş numarası benzersiz olmalı.
