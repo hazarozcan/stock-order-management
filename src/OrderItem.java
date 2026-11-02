@@ -2,6 +2,7 @@ public class OrderItem {
    
     private final Product product;
     private final int quantity;
+    private final double unitprice;
 
     public OrderItem(Product product, int quantity) {
 
@@ -9,6 +10,7 @@ public class OrderItem {
 
             throw new IllegalArgumentException("Enter a valid value");
         } else {
+            this.unitprice = product.getSaleprice();
             this.product = product;
             this.quantity = quantity;
 
@@ -23,4 +25,9 @@ public class OrderItem {
         return quantity;
     }
 
+
+    public double getUnitPrice(){
+        return unitprice;
+    }
 }
+

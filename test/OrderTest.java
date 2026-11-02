@@ -19,5 +19,16 @@ public class OrderTest {
         assertThrows(IllegalArgumentException.class, () -> new Order(-5));
 
     }
+    @Test 
+    void ordersShouldHaveSequentialIds(){
+        OrderManager ordermanager = new OrderManager();
+
+        Order order1 = ordermanager.createOrder();
+
+
+        assertEquals(1001, order1.getOrderId());
+        /* ordermanager.createOrder(); */
+
+    }
 
 }

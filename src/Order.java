@@ -10,7 +10,7 @@ public class Order {
 
     private final int orderId;
 
-    public Order(int orderId) {
+    Order(int orderId) {
 
         if (orderId <= 0) {
             throw new IllegalArgumentException();
@@ -58,7 +58,7 @@ public class Order {
         double totalprice = 0.0;
 
         for (OrderItem o : orderitems) {
-            double temp = (o.getProduct().getSaleprice() * o.getQuantity());
+            double temp = (o.getUnitPrice() * o.getQuantity());
             totalprice = (totalprice + temp);
         }
 
