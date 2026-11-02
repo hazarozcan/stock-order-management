@@ -134,17 +134,19 @@ public class Order {
     }
 
     public void removeItem(String barcode) {
-        if (status != OrderStatus.DRAFT) {
-            throw new IllegalArgumentException();
-        }
+
         if (barcode == null || barcode.isEmpty()) {
             throw new IllegalArgumentException();
 
         }
+        if (status != OrderStatus.DRAFT) {
+            throw new IllegalArgumentException();
+        }
+
         for (OrderItem orderItem : orderitems) {
             if (orderItem.getProduct().getBarcodenumber().equals(barcode)) {
                 orderitems.remove(orderItem);
-
+                return;
             }
         }
         throw new IllegalArgumentException();
