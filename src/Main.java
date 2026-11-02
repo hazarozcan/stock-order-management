@@ -1,50 +1,6 @@
 
 public class Main {
-    public static void main(String[] args) {
-
-        Product product1 = new Product("Logitech-A345", "89579456", 23.5, 41.0, 10);
-        Product product2 = new Product("Asus Tuf-k3", "25779456", 29.5, 51.0, 10);
-        Product product3 = new Product("Hyperx Cloud-II", "87945686", 87.30, 110.21, 50);
-
-        OrderItem orderItem = new OrderItem(product1, 1);
-        OrderItem orderItem2 = new OrderItem(product1, 2);
-        OrderItem orderItem3 = new OrderItem(product2, 6);
-        OrderItem orderItem4 = new OrderItem(product3, 5);
-
-        Order order = new Order(100);
-        Order order2 = new Order(101);
-        Order order3 = new Order(102);
-
-        order.addItem(orderItem);
-        order.addItem(orderItem);
-        order.addItem(orderItem);
-
-        /*
-         * System.out.println(order.getStatus());
-         * order.cancelOrder();
-         * System.out.println(product1.getStocklevel());
-         * order.confirmOrder();
-         * System.out.println(order.getStatus());
-         * System.out.println(product1.getStocklevel());
-         */
-
-        OrderManager ordermanager = new OrderManager();
-
-        ordermanager.addOrder(order);
-        ordermanager.addOrder(order3);
-        ordermanager.addOrder(order2);
-
-         Order ordertemp = ordermanager.getOrderById(100);
-
-        if (ordermanager.getOrderById(100) != null) {
-            System.out.println(ordermanager.getOrderById(100) + " başarıyla Bulundu");
-        }
-        if (ordermanager.getOrderById(99) == null) {
-            System.out.println(ordermanager.getOrderById(99) + " başarisiz!!!");
-            
-        }
-
-        
+    public static void main(String[] args) {  
 
     }
 }
