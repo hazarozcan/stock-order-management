@@ -4,10 +4,20 @@ import java.util.List;
 public class OrderManager {
 
     private List<Order> orders = new ArrayList<>();
+    
+    private int nextOrderId = 1001;
+
+    public Order createOrder(){
+        
+        Order order = new Order(nextOrderId);
+        addOrder(order);
+        this.nextOrderId++;
+        return order;
+    }
 
     public List<Order> getOrdersByStatus(OrderStatus status) {
 
-        ArrayList<Order> filtre = new ArrayList<>();
+        ArrayList<Order> filteredOrders = new ArrayList<>();
 
         if (status == null) {
             throw new IllegalArgumentException("Enter a valid value!");
@@ -15,10 +25,10 @@ public class OrderManager {
 
         for (Order temporder : orders) {
             if (temporder.getStatus() == status) {
-                filtre.add(temporder);
+                filteredOrders.add(temporder);
             }
         }
-         return filtre;
+         return filteredOrders;
     }
 
     public void addOrder(Order order) {
@@ -50,5 +60,6 @@ public class OrderManager {
         }
         return null;
     }
+
 
 }

@@ -129,7 +129,3 @@ public class Order {
     }
 }
 
-/// En son her sipariş için order id belirleyecektik bunun için başlangıç olarak
-/// order sınıfına orderid isimli değişken oluşturduk
-/// Şunları düşün: sipariş numarası sistem tarafından otomatik atanmalı.
-/// sipariş numarası benzersiz olmalı.
