@@ -18,7 +18,6 @@ public class Order {
 
     }
 
-
     public void addItem(OrderItem item) {
 
         if (status != OrderStatus.DRAFT) {
@@ -195,5 +194,14 @@ public class Order {
         }
 
         throw new IllegalArgumentException("Product not found!");
+    }
+
+    public void startPreparing() {
+        if (status != OrderStatus.CONFIRMED) {
+            throw new IllegalArgumentException("Order status must be confirmed");
+
+        }
+        status = OrderStatus.PREPARING;
+
     }
 }

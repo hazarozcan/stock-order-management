@@ -32,7 +32,7 @@ public class Product {
         if (amount > 0 && this.stocklevel >= amount) {
             this.stocklevel = this.stocklevel - amount;
         } else {
-            System.out.println("Please enter a valid value");
+            throw new IllegalArgumentException("Please Enter a valid value");
         }
     }
 

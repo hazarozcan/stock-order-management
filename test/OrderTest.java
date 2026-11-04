@@ -42,10 +42,63 @@ public class OrderTest {
 
         product1.setSaleprice(200);
 
-        assertEquals(190000,ordr1.calculateTotal());
-
-
+        assertEquals(190000, ordr1.calculateTotal());
 
     }
 
+    @Test
+    void insufficientStockShouldNotChangeCart() {
+
+        Product mouse = new Product("Mouse", "12345", 100, 150, 10);
+
+        OrderManager manager = new OrderManager();
+        Order order = manager.createOrder();
+
+        order.addItem(new OrderItem(mouse, 3));
+        order.addItem(new OrderItem(mouse, 4));
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> order.updateItemQuantity("12345", 8));
+
+        assertEquals(3, order.getItems().get(0).getQuantity());
+        assertEquals(4, order.getItems().get(1).getQuantity());
+    }
+
+    @Test
+    void decreaseStockTest() {
+
+        Product mouse = new Product("Mouse", "12345", 100, 150, 10);
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> mouse.decreaseStock(15));
+
+        assertEquals(10, mouse.getStocklevel());
+
+    }
+
+    @Test
+    void confirmOrderShouldNotDecreaseStockWhenOneProductIsInsufficient() {
+
+        Product mouse = new Product("Mouse", "12345", 100, 150, 10);
+        Product keyboard = new Product("Keyboard", "67890", 200, 300, 5);
+
+        OrderManager manager = new OrderManager();
+        Order order = manager.createOrder();
+
+        order.addItem(new OrderItem(mouse, 3));
+        order.addItem(new OrderItem(keyboard, 4));
+
+        keyboard.decreaseStock(3);
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> order.confirmOrder());
+
+        assertEquals(10, mouse.getStocklevel());
+        assertEquals(2, keyboard.getStocklevel());
+
+        assertEquals(OrderStatus.DRAFT, order.getStatus());
+    }
 }
