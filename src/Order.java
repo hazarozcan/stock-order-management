@@ -171,13 +171,25 @@ public class Order {
             if (tempitem.getProduct().getBarcodenumber().equals(barcode)) {
 
                 OrderItem newItem = new OrderItem(tempitem.getProduct(), newQuantity);
-                orderitems.set(i, newItem);
-                
-                if (!(newItem.getProduct().getStocklevel() >= newItem.getQuantity())) {
 
-                    throw new IllegalArgumentException("The specified quantity is not in stock");          
+                int totalQuantity = newQuantity;
+
+                for (OrderItem tempitems : orderitems) {
+
+                    if (barcode.equals(tempitems.getProduct().getBarcodenumber())) {
+
+                        totalQuantity = totalQuantity + tempitems.getQuantity();
+
+                        if (totalQuantity + newItem.getQuantity() > tempitems.getProduct().getStocklevel()) {
+
+                            throw new IllegalArgumentException("The specified quantity is not in stock");
+                        }
+
+                    }
+
                 }
 
+                orderitems.set(i, newItem);
                 return;
             }
         }
