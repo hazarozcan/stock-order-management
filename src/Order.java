@@ -204,4 +204,21 @@ public class Order {
         status = OrderStatus.PREPARING;
 
     }
+
+    public void shipOrder() {
+        if (status != OrderStatus.PREPARING) {
+            throw new IllegalArgumentException("Order status must be preparing");
+        }
+        status = OrderStatus.SHIPPED;
+
+    }
+
+    public void deliverOrder() {
+        if (status != OrderStatus.SHIPPED) {
+            throw new IllegalArgumentException("Order status must be shipped");
+
+        }
+        status = OrderStatus.DELIVERED;
+    }
+
 }

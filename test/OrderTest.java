@@ -101,4 +101,29 @@ public class OrderTest {
 
         assertEquals(OrderStatus.DRAFT, order.getStatus());
     }
+
+    @Test
+    void orderShouldFollowCorrectStatusTransitions() {
+
+        Product mouse = new Product("Mouse", "12345", 100, 150, 10);
+
+        OrderManager manager = new OrderManager();
+        Order order = manager.createOrder();
+
+        order.addItem(new OrderItem(mouse, 2));
+
+        assertEquals(OrderStatus.DRAFT, order.getStatus());
+
+        order.confirmOrder();
+        assertEquals(OrderStatus.CONFIRMED, order.getStatus());
+
+        order.startPreparing();
+        assertEquals(OrderStatus.PREPARING, order.getStatus());
+
+        order.shipOrder();
+        assertEquals(OrderStatus.SHIPPED, order.getStatus());
+
+        order.deliverOrder();
+        assertEquals(OrderStatus.DELIVERED, order.getStatus());
+    }
 }
