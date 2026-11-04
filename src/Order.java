@@ -153,7 +153,12 @@ public class Order {
 
     public void updateItemQuantity(String barcode, int newQuantity) {
 
-        if (barcode == null || barcode == "" || newQuantity <= 0) {
+        if (status != OrderStatus.DRAFT) {
+
+            throw new IllegalArgumentException("Product status must be \"Draft\" proccessing");
+        }
+
+        if (barcode == null || barcode.equals("") || newQuantity <= 0) {
 
             throw new IllegalArgumentException("enter a valid value");
 
@@ -161,20 +166,17 @@ public class Order {
 
         if (status == OrderStatus.DRAFT) {
 
-            
             for (int i = 0; i < orderitems.size(); i++) {
-                
+
                 OrderItem tempitem = orderitems.get(i);
 
                 if (tempitem.getProduct().getBarcodenumber().equals(barcode)) {
 
                     OrderItem newItem = new OrderItem(tempitem.getProduct(), newQuantity);
-                    orderitems.set(i, newItem); 
-                    return;                            
-                }               
+                    orderitems.set(i, newItem);
+                    return;
+                }
             }
         }
-        throw new IllegalArgumentException("Product status must be \"Draft\" proccessing");
-
     }
 }
