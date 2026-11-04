@@ -154,40 +154,39 @@ public class Order {
     public void updateItemQuantity(String barcode, int newQuantity) {
 
         if (status != OrderStatus.DRAFT) {
-
-            throw new IllegalArgumentException("Product status must be \"Draft\" proccessing");
+            throw new IllegalArgumentException("Order must be DRAFT!");
         }
 
-        if (barcode == null || barcode.equals("") || newQuantity <= 0) {
-
-            throw new IllegalArgumentException("enter a valid value");
-
+        if (barcode == null || barcode.isEmpty() || newQuantity <= 0) {
+            throw new IllegalArgumentException("Enter a valid value!");
         }
 
         for (int i = 0; i < orderitems.size(); i++) {
 
-            OrderItem tempitem = orderitems.get(i);
+            OrderItem tempItem = orderitems.get(i);
 
-            if (tempitem.getProduct().getBarcodenumber().equals(barcode)) {
-
-                OrderItem newItem = new OrderItem(tempitem.getProduct(), newQuantity);
+            if (tempItem.getProduct().getBarcodenumber().equals(barcode)) {
 
                 int totalQuantity = newQuantity;
 
-                for (OrderItem tempitems : orderitems) {
+                for (int j = 0; j < orderitems.size(); j++) {
 
-                    if (barcode.equals(tempitems.getProduct().getBarcodenumber())) {
-
-                        totalQuantity = totalQuantity + tempitems.getQuantity();
-
-                        if (totalQuantity + newItem.getQuantity() > tempitems.getProduct().getStocklevel()) {
-
-                            throw new IllegalArgumentException("The specified quantity is not in stock");
-                        }
-
+                    if (j == i) {
+                        continue;
                     }
 
+                    OrderItem otherItem = orderitems.get(j);
+
+                    if (otherItem.getProduct().getBarcodenumber().equals(barcode)) {
+                        totalQuantity += otherItem.getQuantity();
+                    }
                 }
+
+                if (totalQuantity > tempItem.getProduct().getStocklevel()) {
+                    throw new IllegalArgumentException("There are not enough products!");
+                }
+
+                OrderItem newItem = new OrderItem(tempItem.getProduct(), newQuantity);
 
                 orderitems.set(i, newItem);
                 return;
@@ -195,6 +194,5 @@ public class Order {
         }
 
         throw new IllegalArgumentException("Product not found!");
-
     }
 }
