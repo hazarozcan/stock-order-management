@@ -13,7 +13,6 @@ public class OrderItem {
             this.unitprice = product.getSaleprice();
             this.product = product;
             this.quantity = quantity;
-
         }
     }
 
@@ -24,7 +23,6 @@ public class OrderItem {
     public int getQuantity() {
         return quantity;
     }
-
 
     public double getUnitPrice(){
         return unitprice;

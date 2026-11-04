@@ -5,9 +5,7 @@ import java.util.List;
 public class Order {
 
     private List<OrderItem> orderitems = new ArrayList<>();
-
     private OrderStatus status;
-
     private final int orderId;
 
     Order(int orderId) {
@@ -153,4 +151,30 @@ public class Order {
 
     }
 
+    public void updateItemQuantity(String barcode, int newQuantity) {
+
+        if (barcode == null || barcode == "" || newQuantity <= 0) {
+
+            throw new IllegalArgumentException("enter a valid value");
+
+        }
+
+        if (status == OrderStatus.DRAFT) {
+
+            
+            for (int i = 0; i < orderitems.size(); i++) {
+                
+                OrderItem tempitem = orderitems.get(i);
+
+                if (tempitem.getProduct().getBarcodenumber().equals(barcode)) {
+
+                    OrderItem newItem = new OrderItem(tempitem.getProduct(), newQuantity);
+                    orderitems.set(i, newItem); 
+                    return;                            
+                }               
+            }
+        }
+        throw new IllegalArgumentException("Product status must be \"Draft\" proccessing");
+
+    }
 }

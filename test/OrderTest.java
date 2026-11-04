@@ -35,14 +35,14 @@ public class OrderTest {
     void orderTotalShouldNotChangeWhenProductPriceChanges() {
 
         OrderManager mng1 = new OrderManager();
-        Product product1 = new Product("Ryzen 9960x", "9283701293", 32000, 54000, 5);
+        Product product1 = new Product("Ryzen 9960x -4.20GHz", "9283701293", 82000, 95000, 5);
 
         Order ordr1 = mng1.createOrder();
         ordr1.addItem(new OrderItem(product1, 2));
 
         product1.setSaleprice(200);
 
-        assertEquals(108000,ordr1.calculateTotal());
+        assertEquals(190000,ordr1.calculateTotal());
 
 
 
