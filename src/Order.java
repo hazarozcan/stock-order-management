@@ -164,19 +164,25 @@ public class Order {
 
         }
 
-        if (status == OrderStatus.DRAFT) {
+        for (int i = 0; i < orderitems.size(); i++) {
 
-            for (int i = 0; i < orderitems.size(); i++) {
+            OrderItem tempitem = orderitems.get(i);
 
-                OrderItem tempitem = orderitems.get(i);
+            if (tempitem.getProduct().getBarcodenumber().equals(barcode)) {
 
-                if (tempitem.getProduct().getBarcodenumber().equals(barcode)) {
+                OrderItem newItem = new OrderItem(tempitem.getProduct(), newQuantity);
+                orderitems.set(i, newItem);
+                
+                if (!(newItem.getProduct().getStocklevel() >= newItem.getQuantity())) {
 
-                    OrderItem newItem = new OrderItem(tempitem.getProduct(), newQuantity);
-                    orderitems.set(i, newItem);
-                    return;
+                    throw new IllegalArgumentException("The specified quantity is not in stock");          
                 }
+
+                return;
             }
         }
+
+        throw new IllegalArgumentException("Product not found!");
+
     }
 }
