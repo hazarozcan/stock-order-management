@@ -18,6 +18,7 @@ public class Order {
 
     }
 
+
     public void addItem(OrderItem item) {
 
         if (status != OrderStatus.DRAFT) {
@@ -186,7 +187,7 @@ public class Order {
                     throw new IllegalArgumentException("There are not enough products!");
                 }
 
-                OrderItem newItem = new OrderItem(tempItem.getProduct(), newQuantity);
+                OrderItem newItem = new OrderItem(tempItem.getProduct(), newQuantity, tempItem.getUnitPrice());
 
                 orderitems.set(i, newItem);
                 return;
