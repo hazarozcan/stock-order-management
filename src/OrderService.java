@@ -15,9 +15,9 @@ public class OrderService {
     }
 
     public Order createOrder() {
-
-        OrderRepository repositorycall = new OrderRepository();   
-        Order order = new Order(repositorycall.generateOrderId());
+   
+        Order order = new Order(orderRepository.generateOrderId());
+        orderRepository.addOrder(order);
         return order;
     }
 
