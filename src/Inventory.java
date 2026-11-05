@@ -31,10 +31,28 @@ public class Inventory {
 
         if (product == null) {
             throw new IllegalArgumentException("Enter e valid value");
-        }
-        else{
+        } else {
             product.setProductstatus(ProductStatus.DISCONTINUED);
         }
 
     }
+
+    public boolean hasEnoughStock(String barcode, int quantity) {
+        
+        if (barcode == null || barcode == "" || quantity <= 0) {
+            throw new IllegalArgumentException("Enter a valid value");
+        }
+
+        if (getProductByBarcode(barcode) == null) {
+            throw new IllegalArgumentException("Product not found");
+        }
+        
+        Product product = getProductByBarcode(barcode);
+       
+        if (product.getStocklevel() <= quantity) {
+            return false;
+        }
+        return true;
+    }
+
 }

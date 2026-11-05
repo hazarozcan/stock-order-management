@@ -26,6 +26,10 @@ public class OrderService {
         if (order == null) {
             throw new IllegalArgumentException("Order id not found!");
         }
+        if (order.getStatus() != OrderStatus.DRAFT) {
+            throw new IllegalArgumentException("Order status must be Draft");
+            
+        }
 
 
     }
