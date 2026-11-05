@@ -20,6 +20,15 @@ public class OrderService {
         orderRepository.addOrder(order);
         return order;
     }
+    public void confirmOrder(int  orderId){
+       
+        Order order = orderRepository.getOrderById(orderId);
+        if (order == null) {
+            throw new IllegalArgumentException("Order id not found!");
+        }
+
+
+    }
 
 
 

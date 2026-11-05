@@ -22,11 +22,9 @@ public class OrderTest {
 
     @Test
     void ordersShouldHaveSequentialIds() {
-        OrderManager ordermanager = new OrderManager();
+        Order order = new Order(1001);
 
-        Order order1 = ordermanager.createOrder();
-
-        assertEquals(1001, order1.getOrderId());
+        assertEquals(1001, order.getOrderId());
         /* ordermanager.createOrder(); */
 
     }
@@ -34,15 +32,14 @@ public class OrderTest {
     @Test
     void orderTotalShouldNotChangeWhenProductPriceChanges() {
 
-        OrderManager mng1 = new OrderManager();
+        Order order = new Order(1001);
         Product product1 = new Product("Ryzen 9960x -4.20GHz", "9283701293", 82000, 95000, 5);
 
-        Order ordr1 = mng1.createOrder();
-        ordr1.addItem(new OrderItem(product1, 2));
+        order.addItem(new OrderItem(product1, 2));
 
         product1.setSaleprice(200);
 
-        assertEquals(190000, ordr1.calculateTotal());
+        assertEquals(190000, order.calculateTotal());
 
     }
 
@@ -51,8 +48,7 @@ public class OrderTest {
 
         Product mouse = new Product("Mouse", "12345", 100, 150, 10);
 
-        OrderManager manager = new OrderManager();
-        Order order = manager.createOrder();
+        Order order = new Order(1001);
 
         order.addItem(new OrderItem(mouse, 3));
         order.addItem(new OrderItem(mouse, 4));
@@ -84,9 +80,7 @@ public class OrderTest {
         Product mouse = new Product("Mouse", "12345", 100, 150, 10);
         Product keyboard = new Product("Keyboard", "67890", 200, 300, 5);
 
-        OrderManager manager = new OrderManager();
-        Order order = manager.createOrder();
-
+        Order order = new Order(1001);
         order.addItem(new OrderItem(mouse, 3));
         order.addItem(new OrderItem(keyboard, 4));
 
@@ -107,8 +101,7 @@ public class OrderTest {
 
         Product mouse = new Product("Mouse", "12345", 100, 150, 10);
 
-        OrderManager manager = new OrderManager();
-        Order order = manager.createOrder();
+        Order order = new Order(1001);
 
         order.addItem(new OrderItem(mouse, 2));
 
@@ -125,5 +118,25 @@ public class OrderTest {
 
         order.deliverOrder();
         assertEquals(OrderStatus.DELIVERED, order.getStatus());
+    }
+
+    @Test
+    void createOrderShouldSaveOrderInRepository() {
+
+        OrderRepository repository = new OrderRepository();
+        Inventory inventory = new Inventory();
+
+        OrderService service = new OrderService(repository, inventory);
+
+        Order order1 = service.createOrder();
+        Order order2 = service.createOrder();
+
+        assertEquals(1001, order1.getOrderId());
+        assertEquals(1002, order2.getOrderId());
+
+        assertEquals(2, repository.getAllOrders().size());
+
+        assertEquals(order1, repository.getOrderById(1001));
+        assertEquals(order2, repository.getOrderById(1002));
     }
 }

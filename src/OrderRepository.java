@@ -4,6 +4,7 @@ import java.util.List;
 public class OrderRepository {
 
     private final List<Order> orders = new ArrayList<>();
+    
     private int nextOrderId = 1001;
 
     public void addOrder(Order order) {
