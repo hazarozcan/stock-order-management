@@ -1,4 +1,4 @@
-import java.io.ObjectInputFilter.Status;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,13 +40,13 @@ public class OrderService {
             throw new IllegalArgumentException("list not to be empty");
 
         }
-    
+
         Map<String, Integer> requiredQuantities = new HashMap<>();
 
         for (OrderItem item : order.getItems()) {
             if (item.getProduct().getProductstatus() != ProductStatus.ACTIVE) {
                 throw new IllegalArgumentException("product status must be Active!");
-                
+
             }
 
             String barcode = item.getProduct().getBarcodenumber();
@@ -89,4 +89,19 @@ public class OrderService {
 
     }
 
+    public void addProductToOrder(int orderId, String barcode, int quantitiy) {
+
+        if (orderRepository.getOrderById(orderId) == null) {
+            throw new IllegalArgumentException("Order not found!");
+        }
+        if (inventory.getProductByBarcode(barcode) == null) {
+            throw new IllegalArgumentException("Product not found");
+            
+        }
+        Order order = orderRepository.getOrderById(orderId);
+        Product product = inventory.getProductByBarcode(barcode);
+        OrderItem orderitem = new OrderItem(product, quantitiy);
+        order.addItem(orderitem);
+       
+    }
 }
