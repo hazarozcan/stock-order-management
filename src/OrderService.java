@@ -1,3 +1,4 @@
+import java.io.ObjectInputFilter.Status;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -62,7 +63,7 @@ public class OrderService {
             inventory.decreaseStock(entry.getKey(), entry.getValue());
 
         }
-
+        status = OrderStatus.CONFIRMED;
     }
 
 }

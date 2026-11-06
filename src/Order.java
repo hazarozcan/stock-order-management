@@ -221,4 +221,12 @@ public class Order {
         status = OrderStatus.DELIVERED;
     }
 
+    void markAsConfirmed() {
+        if (status != OrderStatus.DRAFT || orderitems.isEmpty()) {
+
+            throw new IllegalArgumentException("Enter a valid value");
+        }
+        status = OrderStatus.CONFIRMED;
+
+    }
 }
