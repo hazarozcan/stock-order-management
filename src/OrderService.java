@@ -40,10 +40,17 @@ public class OrderService {
             throw new IllegalArgumentException("list not to be empty");
 
         }
+        if () {
+            
+        }
 
         Map<String, Integer> requiredQuantities = new HashMap<>();
 
         for (OrderItem item : order.getItems()) {
+            if (item.getProduct().getProductstatus() != ProductStatus.ACTIVE) {
+                throw new IllegalArgumentException("product status must be Active!");
+                
+            }
 
             String barcode = item.getProduct().getBarcodenumber();
             int quantity = item.getQuantity();
@@ -72,6 +79,7 @@ public class OrderService {
                 decreasedQuantities.put(entry.getKey(), entry.getValue());
 
             }
+            order.markAsConfirmed();
 
         } catch (RuntimeException e) {
 
@@ -81,7 +89,7 @@ public class OrderService {
             }
             throw e;
         }
-        order.markAsConfirmed();
+
     }
 
 }

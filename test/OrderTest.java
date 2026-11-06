@@ -150,4 +150,49 @@ public class OrderTest {
         assertEquals(order1, repository.getOrderById(1001));
         assertEquals(order2, repository.getOrderById(1002));
     }
+
+    @Test
+    void failedStockDecreaseShouldRollbackPreviousChanges() {
+
+        OrderRepository repository = new OrderRepository();
+
+        Inventory inventory = new Inventory() {
+
+            private int callCount = 0;
+
+            @Override
+            public void decreaseStock(String barcode, int quantity) {
+
+                callCount++;
+
+                if (callCount == 2) {
+                    throw new IllegalArgumentException("Simulated stock error");
+                }
+
+                super.decreaseStock(barcode, quantity);
+            }
+        };
+
+        OrderService service = new OrderService(repository, inventory);
+
+        Product mouse = new Product("Mouse", "12345", 100, 150, 10);
+        Product keyboard = new Product("Keyboard", "67890", 200, 300, 5);
+
+        inventory.addProduct(mouse);
+        inventory.addProduct(keyboard);
+
+        Order order = service.createOrder();
+
+        order.addItem(new OrderItem(mouse, 3));
+        order.addItem(new OrderItem(keyboard, 2));
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> service.confirmOrder(order.getOrderId()));
+
+        assertEquals(10, mouse.getStocklevel());
+        assertEquals(5, keyboard.getStocklevel());
+
+        assertEquals(OrderStatus.DRAFT, order.getStatus());
+    }
 }
