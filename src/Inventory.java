@@ -38,7 +38,7 @@ public class Inventory {
     }
 
     public boolean hasEnoughStock(String barcode, int quantity) {
-        
+
         if (barcode == null || barcode.isEmpty() || quantity <= 0) {
             throw new IllegalArgumentException("Enter a valid value");
         }
@@ -46,13 +46,21 @@ public class Inventory {
         if (getProductByBarcode(barcode) == null) {
             throw new IllegalArgumentException("Product not found");
         }
-        
+
         Product product = getProductByBarcode(barcode);
-       
+
         if (product.getStocklevel() < quantity) {
             return false;
         }
         return true;
     }
 
+    public void decreaseStock(String barcode, int quantity) {
+       
+        Product product = getProductByBarcode(barcode);
+        if (product == null) {
+            throw new IllegalArgumentException("Enter a valid value");
+        }
+        product.decreaseStock(quantity);
+    }
 }
