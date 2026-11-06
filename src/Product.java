@@ -22,8 +22,7 @@ public class Product {
         if (amount > 0) {
             this.stocklevel = this.stocklevel + amount;
         } else {
-            System.out.println("You can not add negative or 0 value");
-            return;
+            throw new IllegalArgumentException("enter a valid value");
         }
     }
 

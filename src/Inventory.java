@@ -56,11 +56,19 @@ public class Inventory {
     }
 
     public void decreaseStock(String barcode, int quantity) {
-       
+
         Product product = getProductByBarcode(barcode);
         if (product == null) {
             throw new IllegalArgumentException("Enter a valid value");
         }
         product.decreaseStock(quantity);
+    }
+
+    public void increaseStock(String barcode, int quantity) {
+        Product product = getProductByBarcode(barcode);
+        if (product == null) {
+            throw new IllegalArgumentException("Enter a valid value!");
+        }
+        product.increaseStock(quantity);
     }
 }
