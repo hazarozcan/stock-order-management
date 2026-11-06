@@ -77,10 +77,18 @@ public class OrderTest {
     @Test
     void confirmOrderShouldNotDecreaseStockWhenOneProductIsInsufficient() {
 
+        OrderRepository repository = new OrderRepository();
+        Inventory inventory = new Inventory();
+        OrderService service = new OrderService(repository, inventory);
+
         Product mouse = new Product("Mouse", "12345", 100, 150, 10);
         Product keyboard = new Product("Keyboard", "67890", 200, 300, 5);
 
-        Order order = new Order(1001);
+        inventory.addProduct(mouse);
+        inventory.addProduct(keyboard);
+
+        Order order = service.createOrder();
+
         order.addItem(new OrderItem(mouse, 3));
         order.addItem(new OrderItem(keyboard, 4));
 
@@ -88,26 +96,29 @@ public class OrderTest {
 
         assertThrows(
                 IllegalArgumentException.class,
-                () -> order.confirmOrder());
+                () -> service.confirmOrder(order.getOrderId()));
 
         assertEquals(10, mouse.getStocklevel());
         assertEquals(2, keyboard.getStocklevel());
-
         assertEquals(OrderStatus.DRAFT, order.getStatus());
     }
 
     @Test
     void orderShouldFollowCorrectStatusTransitions() {
 
+        OrderRepository repository = new OrderRepository();
+        Inventory inventory = new Inventory();
+        OrderService service = new OrderService(repository, inventory);
+
         Product mouse = new Product("Mouse", "12345", 100, 150, 10);
+        inventory.addProduct(mouse);
 
-        Order order = new Order(1001);
-
+        Order order = service.createOrder();
         order.addItem(new OrderItem(mouse, 2));
 
         assertEquals(OrderStatus.DRAFT, order.getStatus());
 
-        order.confirmOrder();
+        service.confirmOrder(order.getOrderId());
         assertEquals(OrderStatus.CONFIRMED, order.getStatus());
 
         order.startPreparing();

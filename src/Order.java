@@ -63,50 +63,6 @@ public class Order {
         return totalprice;
     }
 
-    public void confirmOrder() {
-
-        if (orderitems.isEmpty()) {
-
-            throw new IllegalArgumentException("Cannot confirm an empty order");
-
-        }
-
-        if (status != OrderStatus.DRAFT) {
-            throw new IllegalArgumentException("Item status must be Draft");
-        }
-
-        for (OrderItem item : orderitems) {
-
-            if (item.getProduct().getProductstatus() != ProductStatus.ACTIVE) {
-                throw new IllegalArgumentException("Product do not available for sale!");
-            }
-
-            int totalquantity = 0;
-
-            for (OrderItem orders : orderitems) {
-
-                if (orders.getProduct().getBarcodenumber().equals(item.getProduct().getBarcodenumber())) {
-
-                    totalquantity = totalquantity + orders.getQuantity();
-
-                }
-
-            }
-
-            if (totalquantity > item.getProduct().getStocklevel()) {
-                throw new IllegalArgumentException("There are not enough products!");
-
-            }
-        }
-
-        for (OrderItem item : orderitems) {
-
-            item.getProduct().decreaseStock(item.getQuantity());
-
-        }
-        status = OrderStatus.CONFIRMED;
-    }
-
     public void cancelOrder() {
 
         if (status != OrderStatus.DRAFT) {

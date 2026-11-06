@@ -36,6 +36,10 @@ public class OrderService {
             throw new IllegalArgumentException("Order status must be Draft");
 
         }
+        if (order.getItems().isEmpty()) {
+            throw new IllegalArgumentException("list not to be empty");
+            
+        }
 
         Map<String, Integer> requiredQuantities = new HashMap<>();
 
@@ -63,7 +67,7 @@ public class OrderService {
             inventory.decreaseStock(entry.getKey(), entry.getValue());
 
         }
-        status = OrderStatus.CONFIRMED;
+        order.markAsConfirmed();
     }
 
 }
