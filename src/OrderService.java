@@ -91,17 +91,19 @@ public class OrderService {
 
     public void addProductToOrder(int orderId, String barcode, int quantitiy) {
 
-        if (orderRepository.getOrderById(orderId) == null) {
-            throw new IllegalArgumentException("Order not found!");
-        }
-        if (inventory.getProductByBarcode(barcode) == null) {
-            throw new IllegalArgumentException("Product not found");
-            
-        }
         Order order = orderRepository.getOrderById(orderId);
         Product product = inventory.getProductByBarcode(barcode);
+
+        if (order == null) {
+            throw new IllegalArgumentException("Order not found!");
+        }
+        if (product == null) {
+            throw new IllegalArgumentException("Product not found");
+
+        }
+
         OrderItem orderitem = new OrderItem(product, quantitiy);
         order.addItem(orderitem);
-       
+
     }
 }

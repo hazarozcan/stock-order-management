@@ -1,6 +1,7 @@
 
 import org.junit.jupiter.api.Test;
 
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -217,5 +218,41 @@ public class OrderTest {
 
         assertEquals(10, mouse.getStocklevel());
         assertEquals(OrderStatus.DRAFT, order.getStatus());
+    }
+
+    @Test
+    void addProductToOrderShouldUseInventoryProduct() {
+
+        OrderRepository repository = new OrderRepository();
+        Inventory inventory = new Inventory();
+        OrderService service = new OrderService(repository, inventory);
+
+        Product mouse = new Product("Mouse", "12345", 100, 150, 10);
+        inventory.addProduct(mouse);
+
+        Order order = service.createOrder();
+
+        service.addProductToOrder(order.getOrderId(), "12345", 3);
+
+        assertEquals(1, order.getItems().size());
+        assertEquals(3, order.getItems().get(0).getQuantity());
+
+        assertSame(mouse, order.getItems().get(0).getProduct());
+    }
+
+    @Test
+    void addProductToOrderShouldRejectUnknownProduct() {
+
+        OrderRepository repository = new OrderRepository();
+        Inventory inventory = new Inventory();
+        OrderService service = new OrderService(repository, inventory);
+
+        Order order = service.createOrder();
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> service.addProductToOrder(order.getOrderId(), "99999", 2));
+
+        assertEquals(0, order.getItems().size());
     }
 }

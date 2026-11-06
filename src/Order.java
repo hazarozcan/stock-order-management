@@ -18,7 +18,7 @@ public class Order {
 
     }
 
-    public void addItem(OrderItem item) {
+    void addItem(OrderItem item) {
 
         if (status != OrderStatus.DRAFT) {
             throw new IllegalArgumentException("Item status not be Draft");
@@ -28,25 +28,6 @@ public class Order {
         }
         if (item.getProduct().getProductstatus() != ProductStatus.ACTIVE) {
             throw new IllegalArgumentException("Item status must be ACTİVE!");
-        }
-        if (item.getQuantity() > item.getProduct().getStocklevel()) {
-            throw new IllegalArgumentException("There are not as many items in stock as indicated !");
-        }
-
-        int totalquantity = 0;
-
-        for (OrderItem orders : orderitems) {
-
-            if (item.getProduct().getBarcodenumber().equals(orders.getProduct().getBarcodenumber())) {
-
-                totalquantity = totalquantity + (orders.getQuantity());
-            }
-        }
-
-        totalquantity = totalquantity + item.getQuantity();
-
-        if (totalquantity > item.getProduct().getStocklevel()) {
-            throw new IllegalArgumentException("There are not as many items in stock as indicated");
         }
         orderitems.add(item);
     }
@@ -122,25 +103,6 @@ public class Order {
             OrderItem tempItem = orderitems.get(i);
 
             if (tempItem.getProduct().getBarcodenumber().equals(barcode)) {
-
-                int totalQuantity = newQuantity;
-
-                for (int j = 0; j < orderitems.size(); j++) {
-
-                    if (j == i) {
-                        continue;
-                    }
-
-                    OrderItem otherItem = orderitems.get(j);
-
-                    if (otherItem.getProduct().getBarcodenumber().equals(barcode)) {
-                        totalQuantity += otherItem.getQuantity();
-                    }
-                }
-
-                if (totalQuantity > tempItem.getProduct().getStocklevel()) {
-                    throw new IllegalArgumentException("There are not enough products!");
-                }
 
                 OrderItem newItem = new OrderItem(tempItem.getProduct(), newQuantity, tempItem.getUnitPrice());
 
