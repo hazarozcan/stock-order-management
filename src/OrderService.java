@@ -63,14 +63,23 @@ public class OrderService {
             }
 
         }
-       
-        Map<String, Integer> decreasedQuantities = new HashMap<>();
-        
-        for (Map.Entry<String, Integer> entry : requiredQuantities.entrySet()) {
-            inventory.decreaseStock(entry.getKey(), entry.getValue());
-            decreasedQuantities.put(entry.getKey(), entry.getValue());
-            
 
+        Map<String, Integer> decreasedQuantities = new HashMap<>();
+
+        try {
+            for (Map.Entry<String, Integer> entry : requiredQuantities.entrySet()) {
+                inventory.decreaseStock(entry.getKey(), entry.getValue());
+                decreasedQuantities.put(entry.getKey(), entry.getValue());
+
+            }
+
+        } catch (RuntimeException e) {
+
+            for (Map.Entry<String, Integer> entry : decreasedQuantities.entrySet()) {
+                inventory.increaseStock(entry.getKey(), entry.getValue());
+
+            }
+            throw e;
         }
         order.markAsConfirmed();
     }
