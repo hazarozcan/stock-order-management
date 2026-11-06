@@ -106,4 +106,14 @@ public class OrderService {
         order.addItem(orderitem);
 
     }
+
+    public void updateItemQuantity(int orderId, String barcode, int newQuantity) {
+        
+        if (orderRepository.getOrderById(orderId) == null) {
+            throw new IllegalArgumentException("Enter valid value");
+        }
+        Order order = orderRepository.getOrderById(orderId);
+        order.updateItemQuantity(barcode, newQuantity); 
+        
+    }
 }

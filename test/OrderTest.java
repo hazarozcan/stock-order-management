@@ -45,21 +45,27 @@ public class OrderTest {
     }
 
     @Test
-    void insufficientStockShouldNotChangeCart() {
+    void cartShouldAllowMoreThanAvailableStock() {
+
+        OrderRepository repository = new OrderRepository();
+        Inventory inventory = new Inventory();
+        OrderService service = new OrderService(repository, inventory);
 
         Product mouse = new Product("Mouse", "12345", 100, 150, 10);
+        inventory.addProduct(mouse);
 
-        Order order = new Order(1001);
+        Order order = service.createOrder();
 
-        order.addItem(new OrderItem(mouse, 3));
-        order.addItem(new OrderItem(mouse, 4));
+        service.addProductToOrder(order.getOrderId(), "12345", 15);
+
+        assertEquals(15, order.getItems().get(0).getQuantity());
 
         assertThrows(
                 IllegalArgumentException.class,
-                () -> order.updateItemQuantity("12345", 8));
+                () -> service.confirmOrder(order.getOrderId()));
 
-        assertEquals(3, order.getItems().get(0).getQuantity());
-        assertEquals(4, order.getItems().get(1).getQuantity());
+        assertEquals(10, mouse.getStocklevel());
+        assertEquals(OrderStatus.DRAFT, order.getStatus());
     }
 
     @Test
