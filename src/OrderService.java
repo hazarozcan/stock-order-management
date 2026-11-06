@@ -38,7 +38,7 @@ public class OrderService {
         }
         if (order.getItems().isEmpty()) {
             throw new IllegalArgumentException("list not to be empty");
-            
+
         }
 
         Map<String, Integer> requiredQuantities = new HashMap<>();
@@ -63,8 +63,13 @@ public class OrderService {
             }
 
         }
+       
+        Map<String, Integer> decreasedQuantities = new HashMap<>();
+        
         for (Map.Entry<String, Integer> entry : requiredQuantities.entrySet()) {
             inventory.decreaseStock(entry.getKey(), entry.getValue());
+            decreasedQuantities.put(entry.getKey(), entry.getValue());
+            
 
         }
         order.markAsConfirmed();
