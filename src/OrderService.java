@@ -40,10 +40,7 @@ public class OrderService {
             throw new IllegalArgumentException("list not to be empty");
 
         }
-        if () {
-            
-        }
-
+    
         Map<String, Integer> requiredQuantities = new HashMap<>();
 
         for (OrderItem item : order.getItems()) {

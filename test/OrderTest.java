@@ -195,4 +195,27 @@ public class OrderTest {
 
         assertEquals(OrderStatus.DRAFT, order.getStatus());
     }
+
+    @Test
+    void inactiveProductShouldNotBeConfirmed() {
+
+        OrderRepository repository = new OrderRepository();
+        Inventory inventory = new Inventory();
+        OrderService service = new OrderService(repository, inventory);
+
+        Product mouse = new Product("Mouse", "12345", 100, 150, 10);
+        inventory.addProduct(mouse);
+
+        Order order = service.createOrder();
+        order.addItem(new OrderItem(mouse, 3));
+
+        mouse.setProductstatus(ProductStatus.INACTIVE);
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> service.confirmOrder(order.getOrderId()));
+
+        assertEquals(10, mouse.getStocklevel());
+        assertEquals(OrderStatus.DRAFT, order.getStatus());
+    }
 }
