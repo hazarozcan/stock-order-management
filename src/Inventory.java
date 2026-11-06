@@ -39,7 +39,7 @@ public class Inventory {
 
     public boolean hasEnoughStock(String barcode, int quantity) {
         
-        if (barcode == null || barcode == "" || quantity <= 0) {
+        if (barcode == null || barcode.isEmpty() || quantity <= 0) {
             throw new IllegalArgumentException("Enter a valid value");
         }
 
@@ -49,7 +49,7 @@ public class Inventory {
         
         Product product = getProductByBarcode(barcode);
        
-        if (product.getStocklevel() <= quantity) {
+        if (product.getStocklevel() < quantity) {
             return false;
         }
         return true;
